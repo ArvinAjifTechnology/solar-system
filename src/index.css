@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Unbounded", sans-serif;
+  --font-body: "Space Grotesk", sans-serif;
+  --font-mono: "Space Mono", monospace;
+
+  --color-void: #05070f;
+  --color-abyss: #0a0e1f;
+  --color-panel: #0d1226;
+  --color-ink: #e9edfa;
+  --color-dim: #8d97b8;
+  --color-faint: #5b6484;
+  --color-solar: #f2b24c;
+  --color-solar-deep: #c97f2b;
+  --color-cryo: #7fd0d4;
+  --color-line: #232c4d;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(242, 178, 76, 0.35);
+}
+
+/* ---------- ambient cosmos behind the canvas ---------- */
+.cosmos-bg {
+  background:
+    radial-gradient(1100px 700px at 78% 18%, rgba(64, 42, 96, 0.34), transparent 62%),
+    radial-gradient(900px 640px at 12% 82%, rgba(23, 74, 84, 0.3), transparent 60%),
+    radial-gradient(700px 500px at 30% 20%, rgba(120, 62, 40, 0.14), transparent 65%),
+    radial-gradient(closest-side at 50% 50%, #0b1124 0%, #070a17 58%, #04060d 100%);
+}
+.nebula-drift {
+  background:
+    radial-gradient(640px 420px at 30% 35%, rgba(127, 208, 212, 0.06), transparent 70%),
+    radial-gradient(720px 520px at 70% 65%, rgba(242, 178, 76, 0.05), transparent 70%);
+  animation: drift 26s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  from {
+    transform: translate3d(-2%, -1.5%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(2.5%, 2%, 0) scale(1.08);
+  }
+}
+
+/* ---------- HUD panels ---------- */
+.hud {
+  background: color-mix(in srgb, var(--color-panel) 88%, transparent);
+  border: 1px solid var(--color-line);
+  box-shadow:
+    0 18px 50px -20px rgba(0, 0, 0, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.panel-reveal {
+  animation: panelIn 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes panelIn {
+  from {
+    opacity: 0;
+    transform: translateX(26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@media (max-width: 767px) {
+  .panel-reveal {
+    animation-name: panelUp;
+  }
+}
+@keyframes panelUp {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rise-in {
+  animation: riseIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pulse-dot {
+  animation: pulseDot 2.2s ease-in-out infinite;
+}
+@keyframes pulseDot {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(242, 178, 76, 0.5);
+  }
+  50% {
+    opacity: 0.55;
+    box-shadow: 0 0 0 6px rgba(242, 178, 76, 0);
+  }
+}
+
+/* ---------- chips & buttons ---------- */
+.chip {
+  transition:
+    color 0.18s ease,
+    border-color 0.18s ease,
+    background-color 0.18s ease,
+    transform 0.18s ease;
+}
+.chip:hover {
+  transform: translateY(-1px);
+}
+.chip:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.btn-press {
+  transition:
+    transform 0.12s ease,
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.25s ease;
+}
+.btn-press:active {
+  transform: scale(0.94);
+}
+
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--color-solar);
+  outline-offset: 2px;
+}
+
+/* ---------- stat readout ---------- */
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.title-outline {
+  color: var(--color-solar);
+}
+@supports (-webkit-text-stroke: 1px black) {
+  .title-outline {
+    color: transparent;
+    -webkit-text-stroke: 1.3px rgba(242, 178, 76, 0.9);
+  }
+}
+
+/* planet preview sphere */
+.sphere {
+  border-radius: 9999px;
+  box-shadow:
+    inset -10px -8px 22px rgba(2, 4, 12, 0.75),
+    inset 6px 6px 14px rgba(255, 255, 255, 0.16),
+    0 0 34px -6px var(--glow, rgba(242, 178, 76, 0.4));
+}
